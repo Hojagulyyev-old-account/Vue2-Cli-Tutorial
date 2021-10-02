@@ -5,7 +5,7 @@
             <label class="checkbox-label" :for="id">{{label}}</label>
         </div>
         <div style="margin-top:10px;" class="btn-group">
-            <button type="button" class="btn"  @click="toggleToItemEditForm">
+            <button type="button" ref="editButton" class="btn"  @click="toggleToItemEditForm">
               Edit <span class="visually-hidden">{{label}}</span>
             </button>
             <button type="button" class="btn btn__danger" @click="deleteToDo">
@@ -44,11 +44,19 @@ export default {
       this.$emit('item-deleted');
     },
     toggleToItemEditForm() {
-      this.isEditing = !this.isEditing
+      this.isEditing = !this.isEditing;
+      this.focusOnEditButton();
+    },
+    focusOnEditButton() {
+      this.$nextTick(() => {
+        const editButtonRef = this.$refs.editButton;
+        editButtonRef.focus();
+      });
     },
     itemEdited(newLabel) {
       this.$emit('item-edited', newLabel);
       this.isEditing = false;
+      this.focusOnEditButton();
     }
   }
 }
