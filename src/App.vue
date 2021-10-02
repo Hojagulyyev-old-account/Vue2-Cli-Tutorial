@@ -2,9 +2,10 @@
     <div id="app">
         <h1>To-Do List</h1>
         <to-do-form @todo-added="addToDo"></to-do-form>
+        <h2 id="list-summary">{{listSummary}}</h2>
         <ul aria-labelledby="list-summary" class="stack-large">
             <li v-for="item in ToDoItems" :key="item.id">
-                <to-do-item :label="item.label" :done="item.done" :id="item.id"></to-do-item>
+                <to-do-item @checkbox-changed="updateDoneStatus(item.id)" :label="item.label" :done="item.done" :id="item.id"></to-do-item>
             </li>
         </ul>
     </div>
@@ -32,6 +33,12 @@ export default {
       ]
     };
   },
+  computed: {
+    listSummary() {
+      const numberFinishedItems = this.ToDoItems.filter(item => item.done).length
+      return `${numberFinishedItems} out of ${this.ToDoItems.length} items completed`
+    }
+  },
   methods: {
     addToDo(ToDoLabel) {
       console.log('To-do added', ToDoLabel)
@@ -42,6 +49,10 @@ export default {
           done: false
         }
       )
+    },
+    updateDoneStatus(ToDoId) {
+      const toDoUpdate = this.ToDoItems.find(item => item.id === ToDoId);
+      toDoUpdate.done = !toDoUpdate.done
     }
   }
 };
