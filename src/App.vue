@@ -1,16 +1,29 @@
 <template>
     <div id="app">
         <h1>To-Do List</h1>
+        <search-query @on-input="onInput"></search-query>
+        <br><br>
         <to-do-form @todo-added="addToDo"></to-do-form>
         <h2 id="list-summary" ref="listSummary" tabindex="-1">{{listSummary}}</h2>
         <ul aria-labelledby="list-summary" class="stack-large">
-            <li v-for="item in ToDoItems" :key="item.id">
-                <to-do-item :label="item.label" :done="item.done" :id="item.id"
-                            @checkbox-changed="updateDoneStatus(item.id)"
-                            @item-deleted="deleteToDo(item.id)"
-                            @item-edited="editToDo(item.id, $event)">
-                </to-do-item>
-            </li>
+            <span v-if="!isFiltering">
+              <li v-for="item in ToDoItems" :key="item.id">
+                  <to-do-item :label="item.label" :done="item.done" :id="item.id"
+                              @checkbox-changed="updateDoneStatus(item.id)"
+                              @item-deleted="deleteToDo(item.id)"
+                              @item-edited="editToDo(item.id, $event)">
+                  </to-do-item>
+              </li>
+            </span>
+            <span else>
+              <li v-for="item in filteredToDos" :key="item.id">
+                  <to-do-item :label="item.label" :done="item.done" :id="item.id"
+                              @checkbox-changed="updateDoneStatus(item.id)"
+                              @item-deleted="deleteToDo(item.id)"
+                              @item-edited="editToDo(item.id, $event)">
+                  </to-do-item>
+              </li>
+            </span>
         </ul>
     </div>
 </template>
@@ -19,6 +32,7 @@
 
 import ToDoItem from './components/ToDoItem';
 import ToDoForm from './components/ToDoForm';
+import SearchQuery from './components/SearchQuery';
 import uniqueId from 'lodash.uniqueid';
 
 export default {
@@ -26,15 +40,18 @@ export default {
   components: {
     ToDoItem,
     ToDoForm,
+    SearchQuery,
   },
   data() {
     return {
       ToDoItems: [
-        { id: uniqueId('todo-'), label: 'Learn Vue', done: false },
-        { id: uniqueId('todo-'), label: 'Create a Vue project with the CLI', done: true },
-        { id: uniqueId('todo-'), label: 'Have fun', done: true },
-        { id: uniqueId('todo-'), label: 'Create a to-do list', done: false }
-      ]
+        { id: uniqueId('todo-'),  label: 'Learn Vue', done: false },
+        { id: uniqueId('todo-'),  label: 'Create a Vue project with the CLI', done: true },
+        { id: uniqueId('todo-'),  label: 'Have fun', done: true },
+        { id: uniqueId('todo-'),  label: 'Create a to-do list', done: false }
+      ],
+      filteredToDos: [],
+      isFiltering: false,
     };
   },
   computed: {
@@ -67,6 +84,19 @@ export default {
       console.log(toDoId, newLabel)
       const toDoToEdit = this.ToDoItems.find(item => item.id === toDoId);
       toDoToEdit.label = newLabel;
+    },
+    onInput(newValue) {
+      if (newValue == "") {
+        console.log('clean')
+        this.isFiltering = false;
+        this.filteredToDos = [];
+      } else {
+        this.isFiltering = true;
+        const filteredToDo = this.ToDoItems.filter(item => {
+              return item.label.toLowerCase().includes(newValue.toLowerCase())
+        });
+        this.filteredToDos = filteredToDo;
+      }
     }
   }
 };
@@ -88,6 +118,12 @@ export default {
 }
 .btn__filter {
   border-color: lightgrey;
+}
+.btn__green {
+  color: #ca3c3c;
+  background-color: #fff;
+  border-color: #ca3c3c;
+  border-left: 15px solid #ca3c3c;
 }
 .btn__danger:focus {
   outline-color: #c82333;

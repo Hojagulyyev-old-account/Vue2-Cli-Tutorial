@@ -12,6 +12,7 @@
               Delete <span class="visually-hidden">{{label}}</span>
             </button>
         </div>
+        <br>
     </div>
     <to-do-item-edit-form @item-edited="itemEdited" @edit-cancelled="toggleToItemEditForm" v-else :id="id" :label="label"></to-do-item-edit-form>
 </template>
@@ -27,7 +28,7 @@ export default {
   props: {
     label: { required: true, type: String},
     done: { default: false, type: Boolean},
-    id: {required: true, type: String}
+    id: { required: true, type: String}
   },
   data() {
     return {

@@ -43,12 +43,12 @@ export default {
       this.$emit("edit-cancelled", this.newLabel);
     }
   },
-  mounted() {
-    this.$nextTick(() => {
-      const labelInputRef = this.$refs.labelInput;
-      labelInputRef.focus();
-    });
-  }
+  // mounted() {
+  //   this.$nextTick(() => {
+  //     const labelInputRef = this.$refs.labelInput;
+  //     labelInputRef.focus();
+  //   });
+  // }
 };
 </script>
 <style scoped>
