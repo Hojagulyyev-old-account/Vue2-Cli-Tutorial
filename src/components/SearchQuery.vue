@@ -1,7 +1,9 @@
 <template lang="html">
   <div class="">
     <h2 class="label-wrapper">
-        <label for="new-todo-input" class="label__lg">
+        <label for="new-todo-input"
+                class="label__lg"
+               :class="{is_filtering: filtering}">
             Search to-do's with typing ...
         </label>
     </h2>
@@ -19,6 +21,9 @@
 
 <script>
 export default {
+  props: {
+    filtering: {default: false, type: Boolean}
+  },
   methods: {
     onReset() {
       document.getElementById('search-input').value = "";
@@ -32,4 +37,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.is_filtering {
+  color: #5fb15f;
+}
 </style>

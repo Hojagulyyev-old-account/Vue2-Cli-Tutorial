@@ -1,5 +1,5 @@
 <template>
-  <form class="stack-small" @submit.prevent="onSubmit">
+  <form class="stack-small mb-4" @submit.prevent="onSubmit">
     <div>
       <label class="edit-label">Edit Name for &quot;{{label}}&quot;</label>
       <input :id="id" ref="labelInput" type="text" autocomplete="off" v-model.lazy.trim="newLabel" />
@@ -52,6 +52,9 @@ export default {
 };
 </script>
 <style scoped>
+.mb-4 {
+  margin-bottom: 15px;
+}
 .edit-label {
   font-family: Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
