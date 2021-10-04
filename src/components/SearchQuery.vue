@@ -22,6 +22,7 @@ export default {
   methods: {
     onReset() {
       document.getElementById('search-input').value = "";
+      this.$emit('on-reset')
     },
     onInput(e) {
       this.$emit('on-input', e.target.value)
