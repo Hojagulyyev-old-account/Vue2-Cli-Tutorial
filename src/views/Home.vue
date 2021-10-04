@@ -2,11 +2,12 @@
     <div id="app">
         <h1>To-Do List</h1>
         <fingerprint-spinner
-          v-if="isFiltering"
+          v-if="isFiltering && filteredToDos.length !== 0"
           :animation-duration="1500"
           :size="64"
           color="#3cac8a"
         />
+        <i v-if="isFiltering && filteredToDos.length === 0" class="fas fa-times-circle fa-2x" style='color: #ca3c3c; margin: 30px 47%;'></i>
         <search-query :filtering="isFiltering" @on-reset="onReset" @on-input="onInput">
             Search to-do's with typing ...
         </search-query>
