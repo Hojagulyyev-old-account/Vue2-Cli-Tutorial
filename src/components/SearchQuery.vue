@@ -1,10 +1,11 @@
 <template lang="html">
   <div class="">
     <h2 class="label-wrapper">
+
         <label for="new-todo-input"
                 class="label__lg"
                :class="{is_filtering: filtering}">
-            Search to-do's with typing ...
+            <slot></slot>
         </label>
     </h2>
     <input
@@ -20,6 +21,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     filtering: {default: false, type: Boolean}
@@ -38,6 +40,6 @@ export default {
 
 <style lang="css" scoped>
 .is_filtering {
-  color: #5fb15f;
+  color: #3cac8a;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is an <span>about</span> page</h1>
+    <h1>This is an <span>article</span> page</h1>
     <div class="spiner">
       <breeding-rhombus-spinner
       :animation-duration="2000"

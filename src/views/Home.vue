@@ -1,7 +1,15 @@
 <template>
     <div id="app">
         <h1>To-Do List</h1>
-        <search-query :filtering="isFiltering" @on-reset="onReset" @on-input="onInput"></search-query>
+        <fingerprint-spinner
+          v-if="isFiltering"
+          :animation-duration="1500"
+          :size="64"
+          color="#3cac8a"
+        />
+        <search-query :filtering="isFiltering" @on-reset="onReset" @on-input="onInput">
+            Search to-do's with typing ...
+        </search-query>
         <br><br>
         <to-do-form @todo-added="addToDo"></to-do-form>
         <h2 id="list-summary" ref="listSummary" tabindex="-1">{{listSummary}}</h2>
@@ -37,6 +45,7 @@ import ToDoItem from '../components/ToDoItem';
 import ToDoForm from '../components/ToDoForm';
 import SearchQuery from '../components/SearchQuery';
 import uniqueId from 'lodash.uniqueid';
+import {FingerprintSpinner} from 'epic-spinners';
 
 export default {
   name: 'app',
@@ -44,6 +53,7 @@ export default {
     ToDoItem,
     ToDoForm,
     SearchQuery,
+    FingerprintSpinner,
   },
   data() {
     return {
